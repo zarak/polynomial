@@ -13,7 +13,7 @@ data Term c e = Term (Coefficient c) (Exponent e)
           deriving (Eq, Ord, Show)
 
 data Polynomial = Polynomial [Term Integer Integer]
-    deriving Show
+    deriving (Eq, Show)
 
 
 derivative :: Polynomial -> Polynomial
