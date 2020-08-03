@@ -1,5 +1,3 @@
-module Spec (main, spec) where
-
 import Test.Hspec
 import Test.QuickCheck
 import Lib
