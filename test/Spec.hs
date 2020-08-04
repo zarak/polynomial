@@ -15,10 +15,18 @@ p5 = Polynomial [t2, t2]
 
 spec :: Spec
 spec =
-    describe "derivative" $ do
-        it "should return an empty list for a null result" $
-            derivative p1 `shouldBe` Polynomial []
-        it "should differentiate a list with one term" $
-            derivative p2 `shouldBe` p4 
-        it "should differentiate a list with two terms" $
-            derivative p3 `shouldBe` p5
+    context "Lib" $ do
+        describe "derivative" $ do
+            it "should return an empty list for a null result" $
+                derivative p1 `shouldBe` Polynomial []
+            it "should differentiate a list with one term" $
+                derivative p2 `shouldBe` p4 
+            it "should differentiate a list with two terms" $
+                derivative p3 `shouldBe` p5 
+        describe "listDeriv" $ do
+            it "should return an empty list for a constant" $
+                listDeriv [Coefficient 10] `shouldBe` []
+            it "should differentiate a list with one term with degree greater than 0" $
+                listDeriv (Coefficient <$> [0, 2]) `shouldBe` Coefficient <$> [2]
+            it "should differentiate a degree 3 polynomial" $
+                listDeriv (Coefficient <$> [1, 2, 3, 4]) `shouldBe` Coefficient <$> [2, 6, 12]
