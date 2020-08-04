@@ -9,7 +9,7 @@ newtype Exponent e = Exponent e
 newtype Coefficient c = Coefficient c
     deriving (Eq, Ord, Show)
 
-data Term c e = Term (Coefficient c) (Exponent e)
+data Term e c = Term (Exponent e) (Coefficient c)
           deriving (Eq, Ord, Show)
 
 type IntegerTerm = Term Integer Integer
@@ -23,5 +23,5 @@ derivative (Polynomial terms) = Polynomial $ fmap derivative' terms
 
 
 derivative' :: IntegerTerm -> IntegerTerm
-derivative' (Term (Coefficient c) (Exponent e)) =
-    Term (Coefficient (e * c)) (Exponent (e - 1))
+derivative' (Term (Exponent e) (Coefficient c)) =
+    Term (Exponent (e - 1)) (Coefficient (e * c))
