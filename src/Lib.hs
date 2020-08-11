@@ -1,9 +1,9 @@
 module Lib where
 
 import Data.Map
+import Data.List
 
 -- Types
-type IntegerTerm = Term Integer Integer
 
 newtype Exponent e =
     Exponent e
@@ -11,7 +11,10 @@ newtype Exponent e =
 
 newtype Coefficient c =
     Coefficient c
-    deriving (Eq, Ord, Show)
+    deriving (Eq, Ord)
+
+instance (Show c, Num c) => Show (Coefficient c) where
+    show (Coefficient c) = (show c) ++ "x"
 
 instance Functor Coefficient where
     fmap f (Coefficient a) = Coefficient (f a)
@@ -26,6 +29,9 @@ data Term e c =
 
 data Polynomial = Polynomial [IntegerTerm]
     deriving (Eq, Show)
+
+type IntegerTerm = Term Integer Integer
+
 
 
 -- Functions
@@ -48,3 +54,16 @@ listDeriv' :: Num a => [Coefficient a] -> a -> [Coefficient a]
 listDeriv' [] _ = []
 listDeriv' (c:cs) n =
     ((*) <$> c <*> Coefficient n) : listDeriv' cs (n+1)
+
+
+printp :: (Num a, Show a) => [Coefficient a] -> String
+printp = intercalate " + " . reverse . zipWith (\exp coeff -> show coeff ++ "^" ++ show exp) [0..]
+
+
+--view :: (Num a, Show a) => Int -> Coefficient a -> String
+--view exp (Coefficient coeff) = 
+    --case (exp, coeff) of
+      --(0, c) -> [head . show $ coeff]
+      --()
+--
+--printp :: [Coefficient a]
